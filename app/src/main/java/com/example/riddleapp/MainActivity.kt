@@ -1,4 +1,5 @@
 package com.example.riddleapp
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -25,6 +26,16 @@ class MainActivity : AppCompatActivity() {
 
         setupObservers()
         setupButtonListeners()
+
+        viewModel.gameOver.observe(this) { isGameOver ->
+            if (isGameOver) {
+                val intent = Intent(this, GameOverActivity::class.java).apply {
+                    putExtra("FINAL_SCORE", viewModel.score.value ?: 0) // Pasar el puntaje final
+                }
+                startActivity(intent)
+                finish() // Cierra esta actividad para no volver atrás
+            }
+        }
     }
 
     private fun setupObservers() {

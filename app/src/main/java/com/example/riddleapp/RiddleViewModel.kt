@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.example.riddleapp.data.Question
 
 class RiddleViewModel:ViewModel() {
+    private val _gameOver = MutableLiveData<Boolean>()
+    val gameOver: LiveData<Boolean> = _gameOver
+
     private val questions = listOf(
         Question(
             "What's Android's official language?",
@@ -42,7 +45,7 @@ class RiddleViewModel:ViewModel() {
             currentIndex++
             _currentQuestion.value = questions[currentIndex]
         } else {
-            // Game over - you could add more logic here
+            _gameOver.value = true
         }
     }
 }
